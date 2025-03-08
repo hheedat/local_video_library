@@ -51,7 +51,7 @@ python app.py
 
 ## Configuration
 
-Create a `dir.conf` file in the project root:
+Create a `dir.conf` file in the project root, list the folders which you want to scan:
 ```
 # Video directories
 D:\Videos\Movie
@@ -59,11 +59,25 @@ E:\Downloads\Videos
 ```
 
 ## File Structure
-The application expects files to follow this naming convention:
-- Video file: `XXX-000.mp4`
-- Poster image: `XXX-000.jpg`
 
----
+The application expects video files and their corresponding poster images to follow this naming convention (just need has same prefix):
+- Video file: `VIDEO_NAME.mp4`
+- Poster image: `VIDEO_NAME.jpg`
+
+For example:
+- `XXX-000.mp4`
+- `XXX-000.jpg`
+
+## Notes
+- The application runs locally and does not upload any files to external servers
+
+
+
+<br><br><br><br><br><br><br>
+
+
+
+
 
 # 本地视频库
 
@@ -126,7 +140,7 @@ E:\Downloads\Videos
 ```
 
 ## 文件结构
-应用程序期望的文件命名格式：
+应用程序期望的文件命名格式（只需相同前缀即可）：
 - 视频文件：`XXX-000.mp4`
 - 海报图片：`XXX-000.jpg`
 
@@ -147,56 +161,3 @@ E:\Downloads\Videos
 | 内存占用 | 低 | 较高 |
 | 并发处理 | 支持 | 不支持 |
 | 响应速度 | 极快 | 一般 |
-
-## 系统要求
-
-### Go 版本
-- Go 1.16 或更高版本
-- 支持 Windows/Linux/macOS
-
-## Features
-
-- Scan local folders for video files and their corresponding poster images
-- YouTube-like interface for browsing videos
-- Search functionality to find videos by name
-- Responsive design that works on both desktop and mobile devices
-
-## Requirements
-
-- Python 3
-- Flask
-
-## Installation
-
-1. Clone this repository or download the files
-2. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Usage
-
-1. Run the application:
-   ```bash
-   python app.py
-   ```
-2. Add folder list in `dir.conf`, and the application will scan the folder for video files (like .mp4) and their corresponding poster images (like .jpg)
-
-3. Open your web browser and navigate to `http://localhost:5000`
-
-4. Use the search bar to find specific videos by name
-
-5. Click on any video card to play the video in a modal window
-
-## File Structure
-
-The application expects video files and their corresponding poster images to follow this naming convention (just need has same prefix):
-- Video file: `VIDEO_NAME.mp4`
-- Poster image: `VIDEO_NAME.jpg`
-
-For example:
-- `XXX-000.mp4`
-- `XXX-000.jpg`
-
-## Notes
-- The application runs locally and does not upload any files to external servers
