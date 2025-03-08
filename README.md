@@ -7,14 +7,12 @@ A web-based video library that allows you to browse and play local video files w
 - Scan local folders for video files and their corresponding poster images
 - YouTube-like interface for browsing videos
 - Search functionality to find videos by name
-- Real-time file system monitoring for automatic updates
 - Responsive design that works on both desktop and mobile devices
 
 ## Requirements
 
-- Python 3.7 or higher
+- Python 3
 - Flask
-- watchdog
 
 ## Installation
 
@@ -30,20 +28,17 @@ A web-based video library that allows you to browse and play local video files w
    ```bash
    python app.py
    ```
+2. Add folder list in `dir.conf`, and the application will scan the folder for video files (like .mp4) and their corresponding poster images (like .jpg)
 
-2. Open your web browser and navigate to `http://localhost:5000`
+3. Open your web browser and navigate to `http://localhost:5000`
 
-3. Click the "Add Folder" button to add a folder containing your videos and poster images
+4. Use the search bar to find specific videos by name
 
-4. The application will scan the folder for video files (.mp4) and their corresponding poster images (.jpg)
-
-5. Use the search bar to find specific videos by name
-
-6. Click on any video card to play the video in a modal window
+5. Click on any video card to play the video in a modal window
 
 ## File Structure
 
-The application expects video files and their corresponding poster images to follow this naming convention:
+The application expects video files and their corresponding poster images to follow this naming convention (just need has same prefix):
 - Video file: `VIDEO_NAME.mp4`
 - Poster image: `VIDEO_NAME.jpg`
 
@@ -52,8 +47,4 @@ For example:
 - `XXX-000.jpg`
 
 ## Notes
-
-- The application monitors the added folders for changes, so any new videos or poster images added to the folders will automatically appear in the interface
-- Video files must be in MP4 format
-- Poster images must be in JPG format
 - The application runs locally and does not upload any files to external servers
