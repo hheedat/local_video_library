@@ -10,11 +10,27 @@ app = Flask(__name__)
 # Global variables to store video data
 video_data = {}
 
+def load_directories():
+    """Load video directories from configuration file."""
+    config_path = Path('dir.conf')
+    if not config_path.exists():
+        print(f"Error: Configuration file '{config_path}' not found!")
+        return []
+    
+    directories = []
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):  # Skip empty lines and comments
+                    directories.append(line)
+        return directories
+    except Exception as e:
+        print(f"Error reading configuration file: {e}")
+        return []
+
 # Configure video directories
-VIDEO_DIRECTORIES = [
-    r'F:\xxxxx',
-    r'E:\xxxxx'
-]
+VIDEO_DIRECTORIES = load_directories()
 
 # Supported file extensions
 VIDEO_EXTENSIONS = {'.mp4', '.mkv', '.avi', '.mov', '.wmv', '.flv', '.webm'}
@@ -50,10 +66,12 @@ def scan_directory(directory):
                 
                 if suffix in VIDEO_EXTENSIONS:
                     video_data[base_name]['video'] = str(file_path)
-                    print(f"Found video: {file_path.name} (base: {base_name})")
+                    print(f"Found video: {file_path.name}")
+                    print(f"Full path: {file_path}")
                 elif suffix in IMAGE_EXTENSIONS:
                     video_data[base_name]['poster'] = str(file_path)
-                    print(f"Found poster: {file_path.name} (base: {base_name})")
+                    print(f"Found poster: {file_path.name}")
+                    print(f"Full path: {file_path}")
     
     print("-" * 50)
 
@@ -70,18 +88,20 @@ def print_scan_summary():
     print(f"Complete pairs (video + poster): {complete_pairs}")
     
     # Check for mismatches
-    videos_without_posters = [name for name, data in video_data.items() if data['video'] and not data['poster']]
-    posters_without_videos = [name for name, data in video_data.items() if not data['video'] and data['poster']]
+    videos_without_posters = [(name, data['video']) for name, data in video_data.items() if data['video'] and not data['poster']]
+    posters_without_videos = [(name, data['poster']) for name, data in video_data.items() if not data['video'] and data['poster']]
     
     if videos_without_posters:
         print("\nVideos without posters:")
-        for name in videos_without_posters:
+        for name, path in videos_without_posters:
             print(f"- {name}")
+            print(f"  Path: {path}")
     
     if posters_without_videos:
         print("\nPosters without videos:")
-        for name in posters_without_videos:
+        for name, path in posters_without_videos:
             print(f"- {name}")
+            print(f"  Path: {path}")
     
     print("-" * 50)
 
@@ -101,7 +121,8 @@ def get_videos():
                 filtered_videos[base_name] = {
                     'title': base_name,
                     'video_path': f'/api/video/{base_name}',
-                    'poster_path': f'/api/poster/{base_name}'
+                    'poster_path': f'/api/poster/{base_name}',
+                    'file_path': data['video']
                 }
     
     return jsonify(list(filtered_videos.values()))
@@ -123,6 +144,10 @@ def get_poster(base_name):
     return '', 404
 
 if __name__ == '__main__':
+    if not VIDEO_DIRECTORIES:
+        print("No directories configured. Please check dir.conf file.")
+        exit(1)
+        
     # Scan all configured directories on startup
     print("Starting video directory scan...")
     for directory in VIDEO_DIRECTORIES:

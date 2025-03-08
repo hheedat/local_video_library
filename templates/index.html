@@ -71,6 +71,14 @@
             background: #fff;
             border-radius: 0 0 8px 8px;
         }
+        .card-path {
+            font-size: 0.8rem;
+            color: #666;
+            padding: 0 0.75rem 0.75rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .card {
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             border-radius: 8px;
@@ -197,6 +205,7 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">${video.title}</h5>
+                        <div class="card-path">${video.file_path}</div>
                     </div>
                 </div>
             `;
