@@ -146,15 +146,16 @@ func getBaseName(filename string) string {
 	baseName = regexp.MustCompile(`(?i)\.(?:fhd|hd)$`).ReplaceAllString(baseName, "")
 	baseName = regexp.MustCompile(`(?i)-(?:fhd|hd)$`).ReplaceAllString(baseName, "")
 
-	// 匹配番号格式
-	re := regexp.MustCompile(`(?i)^([a-z]{2,})[-]?(\d+)$`)
-	matches := re.FindStringSubmatch(baseName)
-	if len(matches) != 3 {
-		return ""
-	}
+	return baseName
+	// // 匹配番号格式
+	// re := regexp.MustCompile(`(?i)^([a-z]{2,})[-]?(\d+)$`)
+	// matches := re.FindStringSubmatch(baseName)
+	// if len(matches) != 3 {
+	// 	return ""
+	// }
 
-	// 格式化文件名
-	return fmt.Sprintf("%s-%s", strings.ToUpper(matches[1]), matches[2])
+	// // 格式化文件名
+	// return fmt.Sprintf("%s-%s", strings.ToUpper(matches[1]), matches[2])
 }
 
 // API 处理函数
